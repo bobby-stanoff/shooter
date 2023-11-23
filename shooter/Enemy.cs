@@ -21,6 +21,7 @@ namespace shooter
             PictureBox.Tag = "enemy";
             PictureBox.Left = GetRandomSpawnX(form);
             PictureBox.Top = GetRandomSpawnY(form);
+            PictureBox.BringToFront();
 
             form.Controls.Add(PictureBox);
 
@@ -65,6 +66,21 @@ namespace shooter
                 default:
                     return 0;
             }
+        }
+        public void Render(Player player)
+        {
+            int directionX = player.PictureBox.Left - this.PictureBox.Left;
+            int directionY = player.PictureBox.Top - this.PictureBox.Top;
+
+            // Normalize the direction
+            double length = Math.Sqrt(directionX * directionX + directionY * directionY);
+
+            directionX = (int)(this.Speed * directionX / length);
+            directionY = (int)(this.Speed * directionY / length);
+
+            // Move the this towards the player
+            this.PictureBox.Left += directionX;
+            this.PictureBox.Top += directionY;
         }
     }
 }

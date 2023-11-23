@@ -32,6 +32,7 @@
             MainTimer = new System.Windows.Forms.Timer(components);
             character = new PictureBox();
             SpawnTimer = new System.Windows.Forms.Timer(components);
+            gamePanel = new Panel();
             ((System.ComponentModel.ISupportInitialize)character).BeginInit();
             SuspendLayout();
             // 
@@ -45,9 +46,10 @@
             // 
             character.BackColor = Color.Transparent;
             character.Image = Properties.Resources.Baddy1;
-            character.Location = new Point(102, 118);
+            character.Location = new Point(112, 129);
             character.Name = "character";
-            character.Size = new Size(51, 53);
+            character.Size = new Size(36, 36);
+            character.SizeMode = PictureBoxSizeMode.StretchImage;
             character.TabIndex = 0;
             character.TabStop = false;
             character.Click += character_Click;
@@ -58,14 +60,24 @@
             SpawnTimer.Interval = 2000;
             SpawnTimer.Tick += SpawnTimerEvent;
             // 
+            // gamePanel
+            // 
+            gamePanel.BackColor = SystemColors.ControlDark;
+            gamePanel.Location = new Point(0, 0);
+            gamePanel.Name = "gamePanel";
+            gamePanel.Size = new Size(720, 720);
+            gamePanel.TabIndex = 1;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(877, 591);
+            ClientSize = new Size(989, 722);
             Controls.Add(character);
+            Controls.Add(gamePanel);
             Name = "Form1";
             Text = "Form1";
+            Load += Form1_Load;
             KeyDown += KeyIsDown;
             KeyPress += KeyIsPress;
             KeyUp += KeyIsUp;
@@ -78,5 +90,6 @@
         private System.Windows.Forms.Timer MainTimer;
         private PictureBox character;
         private System.Windows.Forms.Timer SpawnTimer;
+        private Panel gamePanel;
     }
 }

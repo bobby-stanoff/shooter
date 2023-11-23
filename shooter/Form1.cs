@@ -10,6 +10,7 @@ namespace shooter
         private List<Enemy> enemies = new List<Enemy>();
         private static List<PictureBox> bullets = new List<PictureBox>();
         public static int NYA;
+        
 
         int speed = 10;
 
@@ -18,15 +19,17 @@ namespace shooter
         public Form1()
         {
             InitializeComponent();
-            player = new Player(character, speed);
 
+
+            player = new Player(character, speed, gamePanel.ClientSize);
+            gamePanel.Controls.Add(player.PictureBox);
         }
 
         private void MainTimerEvent(object sender, EventArgs e)
         {
             if (moveRight)
             {
-                player.MoveRight(ClientSize.Width);
+                player.MoveRight();
             }
             if (moveLeft)
             {
@@ -38,15 +41,15 @@ namespace shooter
             }
             if (moveDown)
             {
-                player.MoveDown(ClientSize.Height);
+                player.MoveDown();
             }
             if (moveUp && moveRight)
             {
-                player.MoveUpRight(ClientSize.Width);
+                player.MoveUpRight();
             }
             else if (moveDown && moveRight)
             {
-                player.MoveDownRight(ClientSize.Width, ClientSize.Height);
+                player.MoveDownRight();
             }
             else if (moveUp && moveLeft)
             {
@@ -54,7 +57,7 @@ namespace shooter
             }
             else if (moveDown && moveLeft)
             {
-                player.MoveDownLeft(ClientSize.Height);
+                player.MoveDownLeft();
             }
 
 
@@ -65,24 +68,15 @@ namespace shooter
             {
 
                 // Calculate the direction towards the player
-                int directionX = player.PictureBox.Left - enemy.PictureBox.Left;
-                int directionY = player.PictureBox.Top - enemy.PictureBox.Top;
-
-                // Normalize the direction
-                double length = Math.Sqrt(directionX * directionX + directionY * directionY);
-
-                directionX = (int)(enemy.Speed * directionX / length);
-                directionY = (int)(enemy.Speed * directionY / length);
-
-                // Move the enemy towards the player
-                enemy.PictureBox.Left += directionX;
-                enemy.PictureBox.Top += directionY;
+                enemy.Render(player);
+                gamePanel.Controls.Add(enemy.PictureBox);
 
                 // Check if the enemy has collided with the player
                 if (enemy.PictureBox.Bounds.IntersectsWith(player.PictureBox.Bounds))
                 {
-                    // Handle player-enemy collision
-                    // ...
+                    player.PictureBox.Dispose();
+                    //GameOver();
+                    break;
                 }
 
 
@@ -116,6 +110,7 @@ namespace shooter
             if (e.KeyCode == Keys.Left)
             {
                 moveLeft = true;
+
             }
             if (e.KeyCode == Keys.Right)
             {
@@ -131,7 +126,7 @@ namespace shooter
             }
             if (e.KeyCode == Keys.Space)
             {
-                player.Shoot();
+                player.Shoot(gamePanel);
             }
         }
 
@@ -179,6 +174,22 @@ namespace shooter
         private void SpawnTimerEvent(object sender, EventArgs e)
         {
             SpawnEnemy();
+        }
+
+        private void GameOver()
+        {
+            // MessageBox.Show("boo boo over");
+            // Stop the game
+            MainTimer.Stop();
+
+            // Display game over message
+            MessageBox.Show("Game Over!");
+            Application.Exit();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

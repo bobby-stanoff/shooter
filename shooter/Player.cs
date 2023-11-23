@@ -13,34 +13,44 @@ namespace shooter
         public PictureBox PictureBox { get; } // PictureBox control for the player
         public int Speed { get; set; }
         public string Facing { get => facing; set => facing = value; }
+        public int Health { get => health; set => health = value; }
 
         private List<Bullet> bullets;
         private string facing;
         private bool canShoot = true;
+        private int health;
         private System.Windows.Forms.Timer shootTimer;
 
+        private Size clientSize;
+        private int clientHeight;
+        private int clientWidth;
+        
 
-        public Player(PictureBox pictureBox, int speed)
+        public Player(PictureBox pictureBox, int speed, Size clientSize)
         {
             PictureBox = pictureBox;
             Speed = speed;
+            this.clientSize = clientSize;
             bullets = new List<Bullet>();
             Facing = "up";
             shootTimer = new System.Windows.Forms.Timer();
             shootTimer.Interval = 100;
             shootTimer.Tick += ShootTimer_Tick;
+            clientHeight = clientSize.Height;
+            clientWidth = clientSize.Width;
+            
         }
 
         public void MoveUp()
         {
-            if (PictureBox.Top - Speed >= 0)
+            if (PictureBox.Top >= 10)
             {
                 PictureBox.Top -= Speed;
                 Facing = "up";
             }
         }
 
-        public void MoveDown(int clientHeight)
+        public void MoveDown()
         {
             if (PictureBox.Bottom + Speed <= clientHeight)
             {
@@ -58,7 +68,7 @@ namespace shooter
             }
         }
 
-        public void MoveRight(int clientWidth)
+        public void MoveRight()
         {
             if (PictureBox.Right + Speed <= clientWidth)
             {
@@ -66,7 +76,7 @@ namespace shooter
                 Facing = "right";
             }
         }
-        public void MoveUpRight(int clientWidth)
+        public void MoveUpRight()
         {
             if (PictureBox.Top - Speed >= 0 && PictureBox.Right + Speed <= clientWidth)
             {
@@ -76,7 +86,7 @@ namespace shooter
             }
         }
 
-        public void MoveDownRight(int clientWidth, int clientHeight)
+        public void MoveDownRight()
         {
             if (PictureBox.Bottom + Speed <= clientHeight && PictureBox.Right + Speed <= clientWidth)
             {
@@ -96,7 +106,7 @@ namespace shooter
             }
         }
 
-        public void MoveDownLeft(int clientHeight)
+        public void MoveDownLeft()
         {
             if (PictureBox.Bottom + Speed <= clientHeight && PictureBox.Left - Speed >= 0)
             {
@@ -105,8 +115,9 @@ namespace shooter
                 Facing = "downleft";
             }
         }
-        public void Shoot()
+        public void Shoot(Panel gamePanel)
         {
+            
             if (canShoot)
             {
                 int directionX = 0;
@@ -146,18 +157,17 @@ namespace shooter
                     default:
                         
                         break;
-                } 
+                }
+
+
+
+
+                int bulletLeft = PictureBox.Left + (PictureBox.Width / 2);
+                int bulletTop = PictureBox.Top + (PictureBox.Width / 2);
+                Bullet shootBullet = new Bullet(gamePanel,facing,bulletLeft,bulletTop);
                 
-              
-                Point bulletLocation = new Point(PictureBox.Left + (PictureBox.Width / 2) , PictureBox.Top);
-
-
-                Bullet shootBullet = new Bullet();
-                shootBullet.direction = Facing;
-                shootBullet.bulletLeft = PictureBox.Left + (PictureBox.Width / 2);
-                shootBullet.bulletTop = PictureBox.Top;
                 //shootBullet.MakeBullet();
-                shootBullet.MakeBullet(directionX, directionY);
+                shootBullet.Render(directionX, directionY);
                 // Add the projectile to the form's Controls collection
 
 

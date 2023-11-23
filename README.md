@@ -1,3 +1,3 @@
 # shooter
 
-top-down shooter game style make in winform
+A top-down shooter game-style made in WinForms

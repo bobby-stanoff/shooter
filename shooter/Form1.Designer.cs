@@ -33,6 +33,7 @@
             character = new PictureBox();
             SpawnTimer = new System.Windows.Forms.Timer(components);
             gamePanel = new Panel();
+            lifelabel = new Label();
             ((System.ComponentModel.ISupportInitialize)character).BeginInit();
             SuspendLayout();
             // 
@@ -62,17 +63,31 @@
             // 
             // gamePanel
             // 
-            gamePanel.BackColor = SystemColors.ControlDark;
+            gamePanel.BackColor = Color.Black;
+            gamePanel.BackgroundImageLayout = ImageLayout.Stretch;
             gamePanel.Location = new Point(0, 0);
             gamePanel.Name = "gamePanel";
             gamePanel.Size = new Size(720, 720);
             gamePanel.TabIndex = 1;
+            // 
+            // lifelabel
+            // 
+            lifelabel.AutoSize = true;
+            lifelabel.BackColor = Color.Transparent;
+            lifelabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            lifelabel.ForeColor = Color.DarkGreen;
+            lifelabel.Location = new Point(726, 9);
+            lifelabel.Name = "lifelabel";
+            lifelabel.Size = new Size(73, 38);
+            lifelabel.TabIndex = 0;
+            lifelabel.Text = "Life:";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(989, 722);
+            Controls.Add(lifelabel);
             Controls.Add(character);
             Controls.Add(gamePanel);
             Name = "Form1";
@@ -83,6 +98,7 @@
             KeyUp += KeyIsUp;
             ((System.ComponentModel.ISupportInitialize)character).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -91,5 +107,6 @@
         private PictureBox character;
         private System.Windows.Forms.Timer SpawnTimer;
         private Panel gamePanel;
+        private Label lifelabel;
     }
 }

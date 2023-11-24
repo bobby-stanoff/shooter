@@ -20,24 +20,26 @@ namespace shooter
         private bool canShoot = true;
         private int health;
         private System.Windows.Forms.Timer shootTimer;
-
+        private Panel gamePanel;
         private Size clientSize;
         private int clientHeight;
         private int clientWidth;
         
 
-        public Player(PictureBox pictureBox, int speed, Size clientSize)
+        public Player(PictureBox pictureBox, int speed, Panel gamePanel)
         {
             PictureBox = pictureBox;
             Speed = speed;
             this.clientSize = clientSize;
             bullets = new List<Bullet>();
             Facing = "up";
+            Health = 3;
             shootTimer = new System.Windows.Forms.Timer();
             shootTimer.Interval = 100;
             shootTimer.Tick += ShootTimer_Tick;
-            clientHeight = clientSize.Height;
-            clientWidth = clientSize.Width;
+            clientHeight = gamePanel.Height;
+            clientWidth = gamePanel.Width;
+            this.gamePanel = gamePanel;
             
         }
 
@@ -115,7 +117,11 @@ namespace shooter
                 Facing = "downleft";
             }
         }
-        public void Shoot(Panel gamePanel)
+        public void BasicShoot()
+        {
+            Shoot(facing);
+        }
+        public void Shoot(string direction)
         {
             
             if (canShoot)
@@ -123,7 +129,7 @@ namespace shooter
                 int directionX = 0;
                 int directionY = 0;
 
-                switch (Facing)
+                switch (direction)
                 {
                     case "left":
                         directionX = -1;
@@ -164,7 +170,7 @@ namespace shooter
 
                 int bulletLeft = PictureBox.Left + (PictureBox.Width / 2);
                 int bulletTop = PictureBox.Top + (PictureBox.Width / 2);
-                Bullet shootBullet = new Bullet(gamePanel,facing,bulletLeft,bulletTop);
+                Bullet shootBullet = new Bullet(gamePanel,direction,bulletLeft,bulletTop);
                 
                 //shootBullet.MakeBullet();
                 shootBullet.Render(directionX, directionY);
@@ -177,6 +183,14 @@ namespace shooter
             
         }
         
+        public void TwoShoot()
+        {
+            Shoot("right");
+            canShoot = true;
+            Shoot("upleft");
+            
+           
+        }
         private void ShootTimer_Tick(object sender, EventArgs e)
         {
             canShoot = true;

@@ -1,4 +1,6 @@
+using System.Diagnostics;
 using System.Drawing.Imaging;
+using System.Windows.Forms;
 
 namespace shooter
 {
@@ -9,24 +11,40 @@ namespace shooter
         bool moveRight, moveLeft, moveUp, moveDown;
         private List<Enemy> enemies = new List<Enemy>();
         private static List<PictureBox> bullets = new List<PictureBox>();
+        private static List<PictureBox> playerLife = new List<PictureBox>();
         public static int NYA;
-        
+        private int collisionCooldown = 0;
+        private const int maxCollisionCooldown = 80; // 180 frames = 3 seconds at 60 FPS
+        private bool gamePaused = false;
+        private int pauseTimer = 80;
+
 
         int speed = 10;
 
         internal static List<PictureBox> Bullets { get => bullets; set => bullets = value; }
+        internal static List<PictureBox> PlayerLife { get => playerLife; set => playerLife = value; }
+
 
         public Form1()
         {
             InitializeComponent();
 
 
-            player = new Player(character, speed, gamePanel.ClientSize);
+            player = new Player(character, speed, gamePanel);
             gamePanel.Controls.Add(player.PictureBox);
+            RenderStatus();
+
         }
 
         private void MainTimerEvent(object sender, EventArgs e)
         {
+
+            if (collisionCooldown > 0)
+            {
+                collisionCooldown--;
+                return; // Pause the game for the collision cooldown duration
+            }
+
             if (moveRight)
             {
                 player.MoveRight();
@@ -74,8 +92,24 @@ namespace shooter
                 // Check if the enemy has collided with the player
                 if (enemy.PictureBox.Bounds.IntersectsWith(player.PictureBox.Bounds))
                 {
-                    player.PictureBox.Dispose();
-                    //GameOver();
+
+                   
+                    if (player.Health <= 0)
+                    {
+                        GameOver();
+                    }
+                    else
+                    {
+                        player.Health--;
+                        //lifelabel.Text = "Health: " + player.Health.ToString();
+                        
+                        collisionCooldown = maxCollisionCooldown;
+                        RemoveAllEnemies();
+                        RenderStatus();
+
+                        
+                    }
+
                     break;
                 }
 
@@ -126,7 +160,7 @@ namespace shooter
             }
             if (e.KeyCode == Keys.Space)
             {
-                player.Shoot(gamePanel);
+                player.BasicShoot();
             }
         }
 
@@ -191,5 +225,38 @@ namespace shooter
         {
 
         }
+        private void RemoveAllEnemies()
+        {
+            foreach (var enemy in enemies)
+            {
+
+                enemy.PictureBox.Dispose();
+                this.Controls.Remove(enemy.PictureBox);
+            }
+            enemies.Clear();
+        }
+        private void RenderStatus()
+        {
+            foreach (var enemy in playerLife)
+            {
+
+                enemy.Dispose();
+                this.Controls.Remove(enemy);
+            }
+            playerLife.Clear();
+            for(int i = 0; i< player.Health; i++)
+            {
+                var lifeimg = new PictureBox();
+                lifeimg.Size = new Size(30, 30);
+                lifeimg.BackColor = Color.Black;
+                lifeimg.Tag = "kk";
+                lifeimg.Left = 830 + 50*i;
+                lifeimg.Top = 18;
+                lifeimg.BringToFront();
+                Controls.Add(lifeimg);
+                playerLife.Add(lifeimg);
+            }
+        }
+
     }
 }

@@ -19,6 +19,7 @@ namespace shooter
         private int pauseTimer = 80;
 
 
+
         int speed = 10;
 
         internal static List<PictureBox> Bullets { get => bullets; set => bullets = value; }
@@ -34,11 +35,14 @@ namespace shooter
             gamePanel.Controls.Add(player.PictureBox);
             RenderStatus();
 
+
+
         }
 
         private void MainTimerEvent(object sender, EventArgs e)
         {
 
+            player.UpdatePosition();
             if (collisionCooldown > 0)
             {
                 collisionCooldown--;
@@ -93,7 +97,7 @@ namespace shooter
                 if (enemy.PictureBox.Bounds.IntersectsWith(player.PictureBox.Bounds))
                 {
 
-                   
+
                     if (player.Health <= 0)
                     {
                         GameOver();
@@ -102,12 +106,12 @@ namespace shooter
                     {
                         player.Health--;
                         //lifelabel.Text = "Health: " + player.Health.ToString();
-                        
+
                         collisionCooldown = maxCollisionCooldown;
                         RemoveAllEnemies();
                         RenderStatus();
 
-                        
+
                     }
 
                     break;
@@ -121,10 +125,12 @@ namespace shooter
                         // Handle bullet-enemy collision
                         // Remove the bullet
                         bullet.Dispose();
+                        this.Controls.Remove(bullet);
                         Bullets.Remove(bullet);
 
                         // Remove the enemy
                         enemy.Heath = 0;
+                        player.Score += 1;
 
                         break; // Exit the loop since the enemy has been removed
                     }
@@ -162,6 +168,7 @@ namespace shooter
             {
                 player.BasicShoot();
             }
+
         }
 
         private void KeyIsUp(object sender, KeyEventArgs e)
@@ -207,6 +214,7 @@ namespace shooter
 
         private void SpawnTimerEvent(object sender, EventArgs e)
         {
+
             SpawnEnemy();
         }
 
@@ -237,6 +245,7 @@ namespace shooter
         }
         private void RenderStatus()
         {
+            ScoreLabel.Text = "· " + player.Score.ToString();
             foreach (var enemy in playerLife)
             {
 
@@ -244,19 +253,47 @@ namespace shooter
                 this.Controls.Remove(enemy);
             }
             playerLife.Clear();
-            for(int i = 0; i< player.Health; i++)
+            for (int i = 0; i < player.Health; i++)
             {
                 var lifeimg = new PictureBox();
                 lifeimg.Size = new Size(30, 30);
-                lifeimg.BackColor = Color.Black;
+                lifeimg.BackColor = Color.Red;
                 lifeimg.Tag = "kk";
-                lifeimg.Left = 830 + 50*i;
-                lifeimg.Top = 18;
+                lifeimg.Left = 100 + 50 * i;
+                lifeimg.Top = 10;
                 lifeimg.BringToFront();
-                Controls.Add(lifeimg);
+                gamePanel.Controls.Add(lifeimg);
                 playerLife.Add(lifeimg);
             }
         }
 
+
+
+        private void shrinkTimer_Tick(object sender, EventArgs e)
+        {
+            UpdateShrink();
+        }
+        private void UpdateShrink()
+        {
+            int MaxGamePanelWidth = 720;
+            int MaxGamePanelHeight = 720;
+            int MinGamePanelWidth = 300;
+            int MinGamePanelHeight = 300;
+            int gamePanelWidth = gamePanel.Width;
+            int gamePanelHeight = gamePanel.Height;
+            if (gamePanelWidth > MaxGamePanelWidth)
+            {
+                gamePanelWidth = MaxGamePanelWidth;
+            }
+            if (gamePanelHeight > MaxGamePanelHeight)
+            {
+                gamePanelHeight = MaxGamePanelHeight;
+            }
+            gamePanelWidth = gamePanelWidth > MinGamePanelWidth ? gamePanelWidth : MinGamePanelWidth;
+            gamePanelHeight = gamePanelHeight > MinGamePanelHeight ? gamePanelHeight : MinGamePanelHeight;
+
+            gamePanel.Size = new Size(gamePanelWidth - 1, gamePanelHeight - 1);
+            //this.Size = gamePanel.Size;
+        }
     }
 }

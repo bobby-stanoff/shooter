@@ -33,8 +33,10 @@
             character = new PictureBox();
             SpawnTimer = new System.Windows.Forms.Timer(components);
             gamePanel = new Panel();
-            lifelabel = new Label();
+            ScoreLabel = new Label();
+            shrinkTimer = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)character).BeginInit();
+            gamePanel.SuspendLayout();
             SuspendLayout();
             // 
             // MainTimer
@@ -65,29 +67,34 @@
             // 
             gamePanel.BackColor = Color.Black;
             gamePanel.BackgroundImageLayout = ImageLayout.Stretch;
+            gamePanel.Controls.Add(ScoreLabel);
             gamePanel.Location = new Point(0, 0);
             gamePanel.Name = "gamePanel";
             gamePanel.Size = new Size(720, 720);
             gamePanel.TabIndex = 1;
             // 
-            // lifelabel
+            // ScoreLabel
             // 
-            lifelabel.AutoSize = true;
-            lifelabel.BackColor = Color.Transparent;
-            lifelabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
-            lifelabel.ForeColor = Color.DarkGreen;
-            lifelabel.Location = new Point(726, 9);
-            lifelabel.Name = "lifelabel";
-            lifelabel.Size = new Size(73, 38);
-            lifelabel.TabIndex = 0;
-            lifelabel.Text = "Life:";
+            ScoreLabel.AutoSize = true;
+            ScoreLabel.BackColor = Color.Transparent;
+            ScoreLabel.Font = new Font("Calibri", 20F, FontStyle.Bold, GraphicsUnit.Point);
+            ScoreLabel.ForeColor = Color.RebeccaPurple;
+            ScoreLabel.Location = new Point(3, -1);
+            ScoreLabel.Name = "ScoreLabel";
+            ScoreLabel.Size = new Size(62, 49);
+            ScoreLabel.TabIndex = 2;
+            ScoreLabel.Text = "10";
+            // 
+            // shrinkTimer
+            // 
+            shrinkTimer.Enabled = true;
+            shrinkTimer.Tick += shrinkTimer_Tick;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(989, 722);
-            Controls.Add(lifelabel);
             Controls.Add(character);
             Controls.Add(gamePanel);
             Name = "Form1";
@@ -97,8 +104,9 @@
             KeyPress += KeyIsPress;
             KeyUp += KeyIsUp;
             ((System.ComponentModel.ISupportInitialize)character).EndInit();
+            gamePanel.ResumeLayout(false);
+            gamePanel.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -107,6 +115,7 @@
         private PictureBox character;
         private System.Windows.Forms.Timer SpawnTimer;
         private Panel gamePanel;
-        private Label lifelabel;
+        private System.Windows.Forms.Timer shrinkTimer;
+        private Label ScoreLabel;
     }
 }

@@ -20,7 +20,7 @@ namespace shooter
         private int speed = 20;
         private PictureBox bullet = new PictureBox();
         private System.Windows.Forms.Timer bulletTimer = new System.Windows.Forms.Timer();
-
+        private Panel gamepanel;
 
         public Bullet(Panel gamepanel,string direction, int left, int top) 
         {
@@ -33,7 +33,7 @@ namespace shooter
             bullet.Left = bulletLeft;
             bullet.Top = bulletTop;
             bullet.BringToFront();
-
+            this.gamepanel = gamepanel;
             gamepanel.Controls.Add(bullet);
             Form1.Bullets.Add(bullet);
 
@@ -83,13 +83,22 @@ namespace shooter
             }
 
 
-            if (bullet.Left < 10 || bullet.Left > 860 || bullet.Top < 10 || bullet.Top > 860)
+            if (bullet.Left < 10 || bullet.Left > gamepanel.Width || bullet.Top < 10 || bullet.Top > gamepanel.Height)
             {
+                //if (bullet.Left > gamepanel.Width - 5)
+                //{
+                //    gamepanel.Width += 20;
+                //}
+                //if (bullet.Top > gamepanel.Height - 5)
+                //{
+                //    gamepanel.Height += 20;
+                //}
                 bulletTimer.Stop();
                 bulletTimer.Dispose();
                 bullet.Dispose();
                 bulletTimer = null;
                 bullet = null;
+                
             }
 
 

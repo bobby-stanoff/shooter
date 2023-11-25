@@ -14,14 +14,16 @@ namespace shooter
         public int Speed { get; set; }
         public string Facing { get => facing; set => facing = value; }
         public int Health { get => health; set => health = value; }
+        public int Score { get => score; set => score = value; }
 
         private List<Bullet> bullets;
         private string facing;
         private bool canShoot = true;
         private int health;
+        private int score;
         private System.Windows.Forms.Timer shootTimer;
         private Panel gamePanel;
-        private Size clientSize;
+       
         private int clientHeight;
         private int clientWidth;
         
@@ -30,10 +32,11 @@ namespace shooter
         {
             PictureBox = pictureBox;
             Speed = speed;
-            this.clientSize = clientSize;
+            
             bullets = new List<Bullet>();
             Facing = "up";
             Health = 3;
+            Score = 0;
             shootTimer = new System.Windows.Forms.Timer();
             shootTimer.Interval = 100;
             shootTimer.Tick += ShootTimer_Tick;
@@ -45,7 +48,7 @@ namespace shooter
 
         public void MoveUp()
         {
-            if (PictureBox.Top >= 10)
+            if (PictureBox.Top >= 50)
             {
                 PictureBox.Top -= Speed;
                 Facing = "up";
@@ -191,10 +194,16 @@ namespace shooter
             
            
         }
+        
         private void ShootTimer_Tick(object sender, EventArgs e)
         {
             canShoot = true;
             shootTimer.Stop();
+        }
+        public void UpdatePosition()
+        {
+            clientWidth = gamePanel.Width;
+            clientHeight = gamePanel.Height;
         }
     }
 }

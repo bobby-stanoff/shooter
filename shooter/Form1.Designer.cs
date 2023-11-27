@@ -87,14 +87,13 @@
             // 
             // shrinkTimer
             // 
-            shrinkTimer.Enabled = true;
             shrinkTimer.Tick += shrinkTimer_Tick;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(989, 722);
+            ClientSize = new Size(698, 664);
             Controls.Add(character);
             Controls.Add(gamePanel);
             Name = "Form1";
@@ -117,5 +116,6 @@
         private Panel gamePanel;
         private System.Windows.Forms.Timer shrinkTimer;
         private Label ScoreLabel;
+
     }
 }

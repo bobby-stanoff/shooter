@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -185,14 +186,42 @@ namespace shooter
             }
             
         }
-        
+
         public void TwoShoot()
         {
-            Shoot("right");
-            canShoot = true;
-            Shoot("upleft");
             
-           
+
+            switch (facing)
+            {
+                case "left":
+                    
+                    Shoot("upleft");
+                    canShoot = true;
+                    Shoot("downleft");
+                    break;
+                case "right":
+                    
+                    Shoot("upright");
+                    canShoot = true;
+                    Shoot("downright");
+                    break;
+                case "up":
+                    
+                    Shoot("upleft");
+                    canShoot = true;
+                    Shoot("upright");
+                    break;
+                case "down":
+                    
+                    Shoot("downright");
+                    canShoot = true;
+                    Shoot("downleft");
+                    break;
+                default:
+                    Shoot(facing);
+                    break;
+
+            }
         }
         
         private void ShootTimer_Tick(object sender, EventArgs e)

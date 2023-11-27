@@ -1,4 +1,5 @@
-﻿using System;
+﻿using shooter.Properties;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -16,8 +17,10 @@ namespace shooter
         public Enemy(Form form, PictureBox player)
         {
             PictureBox = new PictureBox();
-            PictureBox.BackColor = Color.Green;
+            PictureBox.BackColor = Color.Transparent;
+            PictureBox.Image = Resources.Baddy5;
             PictureBox.Size = new Size(30, 30);
+            PictureBox.SizeMode  = PictureBoxSizeMode.StretchImage;
             PictureBox.Tag = "enemy";
             PictureBox.Left = GetRandomSpawnX(form);
             PictureBox.Top = GetRandomSpawnY(form);

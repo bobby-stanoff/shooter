@@ -17,6 +17,8 @@ namespace shooter
         private const int maxCollisionCooldown = 80; // 180 frames = 3 seconds at 60 FPS
         private bool gamePaused = false;
         private int pauseTimer = 80;
+        private System.Windows.Forms.Timer blinkTimer;
+        private int BlinkelapsedDuration = 0;
 
 
 
@@ -106,7 +108,7 @@ namespace shooter
                     {
                         player.Health--;
                         //lifelabel.Text = "Health: " + player.Health.ToString();
-
+                        StartBlinking(player.PictureBox, 2000);
                         collisionCooldown = maxCollisionCooldown;
                         RemoveAllEnemies();
                         RenderStatus();
@@ -223,6 +225,8 @@ namespace shooter
             // MessageBox.Show("boo boo over");
             // Stop the game
             MainTimer.Stop();
+            shrinkTimer.Stop();
+            SpawnTimer.Stop();
 
             // Display game over message
             MessageBox.Show("Game Over!");
@@ -272,13 +276,14 @@ namespace shooter
         private void shrinkTimer_Tick(object sender, EventArgs e)
         {
             UpdateShrink();
+
         }
         private void UpdateShrink()
         {
             int MaxGamePanelWidth = 720;
             int MaxGamePanelHeight = 720;
-            int MinGamePanelWidth = 300;
-            int MinGamePanelHeight = 300;
+            int MinGamePanelWidth = 400;
+            int MinGamePanelHeight = 200;
             int gamePanelWidth = gamePanel.Width;
             int gamePanelHeight = gamePanel.Height;
             if (gamePanelWidth > MaxGamePanelWidth)
@@ -294,6 +299,42 @@ namespace shooter
 
             gamePanel.Size = new Size(gamePanelWidth - 1, gamePanelHeight - 1);
             //this.Size = gamePanel.Size;
+        }
+
+        public void StartBlinking(PictureBox pictureBox, int blinkDuration)
+        {
+            blinkTimer = new System.Windows.Forms.Timer();
+            blinkTimer.Interval = 200;
+            blinkTimer.Enabled = true;
+            blinkTimer.Tick += (sender, e) => BlinkTimer_Tick(pictureBox, blinkDuration);
+
+            pictureBox.Visible = true;
+
+            // Reset the elapsed duration
+            BlinkelapsedDuration = 0;
+
+            // Start the Timer
+            blinkTimer.Start();
+        }
+
+
+
+        private void BlinkTimer_Tick(PictureBox pictureBox, int blinkDuration)
+        {
+            // Toggle the visibility of the PictureBox
+            pictureBox.Visible = !pictureBox.Visible;
+
+            // Increment the elapsed duration
+            BlinkelapsedDuration += 200;
+
+            // Check if the elapsed duration reaches the blink duration
+            if (BlinkelapsedDuration >= blinkDuration)
+            {
+                blinkTimer.Stop();
+                blinkTimer.Enabled = false;
+                // Ensure the PictureBox is visible
+                pictureBox.Visible = true;
+            }
         }
     }
 }

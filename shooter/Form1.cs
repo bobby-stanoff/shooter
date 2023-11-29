@@ -168,7 +168,7 @@ namespace shooter
             }
             if (e.KeyCode == Keys.Space)
             {
-                player.BasicShoot();
+                player.TwoShoot();
             }
 
         }

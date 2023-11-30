@@ -35,7 +35,10 @@ namespace shooter
 
             player = new Player(character, speed, gamePanel);
             gamePanel.Controls.Add(player.PictureBox);
+            gamePanel.Controls.Add(menu);
             RenderStatus();
+            MainTimer.Stop();
+            SpawnTimer.Stop();
 
 
 
@@ -335,6 +338,14 @@ namespace shooter
                 // Ensure the PictureBox is visible
                 pictureBox.Visible = true;
             }
+        }
+
+        private void btnplay_Click(object sender, EventArgs e)
+        {
+            MainTimer.Start();
+            SpawnTimer.Start();
+            menu.Dispose();
+           
         }
     }
 }

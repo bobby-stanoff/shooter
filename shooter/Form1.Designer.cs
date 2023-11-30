@@ -33,10 +33,13 @@
             character = new PictureBox();
             SpawnTimer = new System.Windows.Forms.Timer(components);
             gamePanel = new Panel();
+            menu = new Panel();
             ScoreLabel = new Label();
             shrinkTimer = new System.Windows.Forms.Timer(components);
+            btn_play = new Button();
             ((System.ComponentModel.ISupportInitialize)character).BeginInit();
             gamePanel.SuspendLayout();
+            menu.SuspendLayout();
             SuspendLayout();
             // 
             // MainTimer
@@ -67,11 +70,22 @@
             // 
             gamePanel.BackColor = Color.Black;
             gamePanel.BackgroundImageLayout = ImageLayout.Stretch;
+            gamePanel.Controls.Add(menu);
             gamePanel.Controls.Add(ScoreLabel);
             gamePanel.Location = new Point(0, 0);
             gamePanel.Name = "gamePanel";
             gamePanel.Size = new Size(720, 720);
             gamePanel.TabIndex = 1;
+            // 
+            // menu
+            // 
+            menu.BackgroundImage = Properties.Resources._2020968_2001;
+            menu.BackgroundImageLayout = ImageLayout.Stretch;
+            menu.Controls.Add(btn_play);
+            menu.Location = new Point(173, 89);
+            menu.Name = "menu";
+            menu.Size = new Size(308, 467);
+            menu.TabIndex = 3;
             // 
             // ScoreLabel
             // 
@@ -89,6 +103,16 @@
             // 
             shrinkTimer.Tick += shrinkTimer_Tick;
             // 
+            // btn_play
+            // 
+            btn_play.Location = new Point(97, 212);
+            btn_play.Name = "btn_play";
+            btn_play.Size = new Size(112, 34);
+            btn_play.TabIndex = 0;
+            btn_play.Text = "button1";
+            btn_play.UseVisualStyleBackColor = true;
+            btn_play.Click += btnplay_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -105,6 +129,7 @@
             ((System.ComponentModel.ISupportInitialize)character).EndInit();
             gamePanel.ResumeLayout(false);
             gamePanel.PerformLayout();
+            menu.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -116,6 +141,7 @@
         private Panel gamePanel;
         private System.Windows.Forms.Timer shrinkTimer;
         private Label ScoreLabel;
-
+        private Panel menu;
+        private Button btn_play;
     }
 }

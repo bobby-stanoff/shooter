@@ -63,6 +63,26 @@ namespace shooter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _2020968_200 {
+            get {
+                object obj = ResourceManager.GetObject("2020968-200", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _2020968_2001 {
+            get {
+                object obj = ResourceManager.GetObject("2020968-2001", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Baddy1 {
             get {
                 object obj = ResourceManager.GetObject("Baddy1", resourceCulture);

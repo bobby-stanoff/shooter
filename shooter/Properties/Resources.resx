@@ -121,16 +121,19 @@
   <data name="Baddy1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Baddy11.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="2020968-200" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\2020968-200.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="galactic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\galactic.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Baddy5" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Baddy51.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="FjveSBBXoAI7CNj" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FjveSBBXoAI7CNj.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="sword" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sword.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="2020968-2001" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\2020968-2001.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="antigalactic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\antigalactic.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
@@ -11,8 +12,9 @@ namespace shooter
         bool moveRight, moveLeft, moveUp, moveDown;
         private List<Enemy> enemies = new List<Enemy>();
         private static List<PictureBox> bullets = new List<PictureBox>();
+        private static List<Item> items = new List<Item>();
         private static List<PictureBox> playerLife = new List<PictureBox>();
-        public static int NYA;
+
         private int collisionCooldown = 0;
         private const int maxCollisionCooldown = 80; // 180 frames = 3 seconds at 60 FPS
         private bool gamePaused = false;
@@ -35,10 +37,10 @@ namespace shooter
 
             player = new Player(character, speed, gamePanel);
             gamePanel.Controls.Add(player.PictureBox);
-            gamePanel.Controls.Add(menu);
+            Size = new Size(gamePanel.Size.Width+10,gamePanel.Size.Height+50);
+
             RenderStatus();
-            MainTimer.Stop();
-            SpawnTimer.Stop();
+
 
 
 
@@ -87,8 +89,34 @@ namespace shooter
                 player.MoveDownLeft();
             }
 
+            foreach (Item item in items)
+            {
+                if (item.PictureBox.Bounds.IntersectsWith(player.PictureBox.Bounds))
+                {
+                    player.ConsumeItem(item.Type);
+
+                    item.PictureBox.Dispose();
+                    this.Controls.Remove(item.PictureBox);
+                    items.Remove(item);
+                    //MessageBox.Show(player.Consumed);
+
+                    // Remove the enemy
 
 
+                    break; // Exit the loop since the enemy has been removed
+                }
+            }
+            if (player.Consumed != "")
+            {
+                if (player.Consumed == "galactic")
+                {
+                    shrinkTimer.Start();
+                }
+                else if (player.Consumed == "antigalactic")
+                {
+                    shrinkTimer.Stop();
+                }
+            }
 
 
             foreach (Enemy enemy in enemies)
@@ -171,7 +199,11 @@ namespace shooter
             }
             if (e.KeyCode == Keys.Space)
             {
-                player.TwoShoot();
+                if (player.Consumed == "sword")
+                {
+                    player.TwoShoot();
+                }
+                else player.BasicShoot();
             }
 
         }
@@ -216,11 +248,24 @@ namespace shooter
             Enemy enemy = new Enemy(this, player.PictureBox);
             enemies.Add(enemy);
         }
-
+        private void SpawnItem()
+        {
+            List<string> availableItems = new List<string> { "sword", "galactic", "antigalactic" };
+            Random random = new Random();
+            int index = random.Next(availableItems.Count);
+            Item item = new Item(gamePanel, availableItems[index]);
+            items.Add(item);
+        }
         private void SpawnTimerEvent(object sender, EventArgs e)
         {
 
-            SpawnEnemy();
+            //SpawnEnemy();
+            Random random = new Random();
+            int itemchances = random.Next(0, 1);
+            if (itemchances == 0)
+            {
+                SpawnItem();
+            }
         }
 
         private void GameOver()
@@ -300,8 +345,8 @@ namespace shooter
             gamePanelWidth = gamePanelWidth > MinGamePanelWidth ? gamePanelWidth : MinGamePanelWidth;
             gamePanelHeight = gamePanelHeight > MinGamePanelHeight ? gamePanelHeight : MinGamePanelHeight;
 
-            gamePanel.Size = new Size(gamePanelWidth - 1, gamePanelHeight - 1);
-            //this.Size = gamePanel.Size;
+            gamePanel.Size = new Size(gamePanelWidth-1, gamePanelHeight-1);
+            this.Size = new Size(gamePanel.Size.Width+10,gamePanel.Size.Height+50);
         }
 
         public void StartBlinking(PictureBox pictureBox, int blinkDuration)
@@ -344,8 +389,8 @@ namespace shooter
         {
             MainTimer.Start();
             SpawnTimer.Start();
-            menu.Dispose();
-           
+
+
         }
     }
 }

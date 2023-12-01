@@ -16,18 +16,22 @@ namespace shooter
         public string Facing { get => facing; set => facing = value; }
         public int Health { get => health; set => health = value; }
         public int Score { get => score; set => score = value; }
+        public string Consumed { get => consumed; set => consumed = value; }
+        public int ConsumeDuration { get => consumeDuration; set => consumeDuration = value; }
 
         private List<Bullet> bullets;
         private string facing;
         private bool canShoot = true;
         private int health;
         private int score;
+        private string consumed;
+        private int consumeDuration;
         private System.Windows.Forms.Timer shootTimer;
+        private System.Windows.Forms.Timer consumeTimer;
         private Panel gamePanel;
-       
+        
         private int clientHeight;
         private int clientWidth;
-        
 
         public Player(PictureBox pictureBox, int speed, Panel gamePanel)
         {
@@ -38,13 +42,18 @@ namespace shooter
             Facing = "up";
             Health = 3;
             Score = 0;
+            Consumed = "";
             shootTimer = new System.Windows.Forms.Timer();
             shootTimer.Interval = 100;
             shootTimer.Tick += ShootTimer_Tick;
             clientHeight = gamePanel.Height;
             clientWidth = gamePanel.Width;
             this.gamePanel = gamePanel;
-            
+
+            consumeTimer = new System.Windows.Forms.Timer();
+            consumeTimer.Interval = 30000; // 30 seconds
+            consumeTimer.Tick += ConsumeTimer_Tick;
+
         }
 
         public void MoveUp()
@@ -174,8 +183,13 @@ namespace shooter
 
                 int bulletLeft = PictureBox.Left + (PictureBox.Width / 2);
                 int bulletTop = PictureBox.Top + (PictureBox.Width / 2);
-                Bullet shootBullet = new Bullet(gamePanel,direction,bulletLeft,bulletTop);
-                
+                if(consumed == "galactic")
+                {
+                    Bullet shootBulletR = new Bullet(gamePanel,direction,bulletLeft,bulletTop,1);
+                    shootBulletR.Render(directionX, directionY);
+                }
+                Bullet shootBullet = new Bullet(gamePanel,direction,bulletLeft,bulletTop,0);
+
                 //shootBullet.MakeBullet();
                 shootBullet.Render(directionX, directionY);
                 // Add the projectile to the form's Controls collection
@@ -233,6 +247,20 @@ namespace shooter
         {
             clientWidth = gamePanel.Width;
             clientHeight = gamePanel.Height;
+        }
+        public void ConsumeItem(string itemName)
+        {
+            // Apply the effect of the consumed item...
+
+            Consumed = itemName;
+            consumeTimer.Start();
+        }
+        private void ConsumeTimer_Tick(object sender, EventArgs e)
+        {
+            // The effect of the consumed item has expired
+            Consumed = "";
+            consumeTimer.Stop();
+            
         }
     }
 }

@@ -164,6 +164,7 @@ namespace shooter
                         // Remove the enemy
                         enemy.Heath = 0;
                         player.Score += 1;
+                        ScoreLabel.Text = "· " + player.Score.ToString();
 
                         break; // Exit the loop since the enemy has been removed
                     }
@@ -259,9 +260,9 @@ namespace shooter
         private void SpawnTimerEvent(object sender, EventArgs e)
         {
 
-            //SpawnEnemy();
+            SpawnEnemy();
             Random random = new Random();
-            int itemchances = random.Next(0, 1);
+            int itemchances = random.Next(0, 5);
             if (itemchances == 0)
             {
                 SpawnItem();
@@ -297,7 +298,7 @@ namespace shooter
         }
         private void RenderStatus()
         {
-            ScoreLabel.Text = "· " + player.Score.ToString();
+            
             foreach (var enemy in playerLife)
             {
 

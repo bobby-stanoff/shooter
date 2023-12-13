@@ -63,16 +63,6 @@ namespace shooter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _2020968_2001 {
-            get {
-                object obj = ResourceManager.GetObject("2020968-2001", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap antigalactic {
             get {
                 object obj = ResourceManager.GetObject("antigalactic", resourceCulture);
@@ -96,6 +86,16 @@ namespace shooter.Properties {
         internal static System.Drawing.Bitmap Baddy5 {
             get {
                 object obj = ResourceManager.GetObject("Baddy5", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap baddyhead {
+            get {
+                object obj = ResourceManager.GetObject("baddyhead", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

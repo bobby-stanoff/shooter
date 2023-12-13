@@ -51,7 +51,7 @@ namespace shooter
             this.gamePanel = gamePanel;
 
             consumeTimer = new System.Windows.Forms.Timer();
-            consumeTimer.Interval = 30000; // 30 seconds
+            consumeTimer.Interval = 15000; // 15 seconds
             consumeTimer.Tick += ConsumeTimer_Tick;
 
         }
@@ -203,8 +203,6 @@ namespace shooter
 
         public void TwoShoot()
         {
-            
-
             switch (facing)
             {
                 case "left":

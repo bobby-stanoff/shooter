@@ -46,8 +46,6 @@ namespace shooter
 
         }
 
-
-
         public void Render(int directionX, int directionY)
         {
 
@@ -63,7 +61,6 @@ namespace shooter
 
 
         }
-
 
         private void BulletTimerEvent(object sender, EventArgs e)
         {

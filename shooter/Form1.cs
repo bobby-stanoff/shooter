@@ -1,3 +1,4 @@
+using shooter.Properties;
 using System;
 using System.Diagnostics;
 using System.Drawing.Imaging;
@@ -37,15 +38,12 @@ namespace shooter
 
             player = new Player(character, speed, gamePanel);
             gamePanel.Controls.Add(player.PictureBox);
-            Size = new Size(gamePanel.Size.Width+10,gamePanel.Size.Height+50);
+            Size = new Size(gamePanel.Size.Width + 10, gamePanel.Size.Height + 50);
 
             RenderStatus();
 
 
-
-
         }
-
         private void MainTimerEvent(object sender, EventArgs e)
         {
 
@@ -138,12 +136,11 @@ namespace shooter
                     else
                     {
                         player.Health--;
-                        //lifelabel.Text = "Health: " + player.Health.ToString();
+                    
                         StartBlinking(player.PictureBox, 2000);
                         collisionCooldown = maxCollisionCooldown;
                         RemoveAllEnemies();
                         RenderStatus();
-
 
                     }
 
@@ -178,7 +175,6 @@ namespace shooter
             }
 
         }
-
         private void KeyIsDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Left)
@@ -208,7 +204,6 @@ namespace shooter
             }
 
         }
-
         private void KeyIsUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Left)
@@ -228,22 +223,10 @@ namespace shooter
                 moveDown = false;
             }
         }
-
         private void KeyIsPress(object sender, KeyPressEventArgs e)
         {
 
         }
-
-        private void character_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void EnemyTimerEvent(object sender, EventArgs e)
-        {
-
-
-        }
-
         private void SpawnEnemy()
         {
             Enemy enemy = new Enemy(this, player.PictureBox);
@@ -268,7 +251,6 @@ namespace shooter
                 SpawnItem();
             }
         }
-
         private void GameOver()
         {
             // MessageBox.Show("boo boo over");
@@ -281,7 +263,6 @@ namespace shooter
             MessageBox.Show("Game Over!");
             Application.Exit();
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -298,7 +279,7 @@ namespace shooter
         }
         private void RenderStatus()
         {
-            
+
             foreach (var enemy in playerLife)
             {
 
@@ -310,18 +291,16 @@ namespace shooter
             {
                 var lifeimg = new PictureBox();
                 lifeimg.Size = new Size(30, 30);
-                lifeimg.BackColor = Color.Red;
+                
                 lifeimg.Tag = "kk";
                 lifeimg.Left = 100 + 50 * i;
                 lifeimg.Top = 10;
                 lifeimg.BringToFront();
+                lifeimg.Image = Resources.baddyhead;
                 gamePanel.Controls.Add(lifeimg);
                 playerLife.Add(lifeimg);
             }
         }
-
-
-
         private void shrinkTimer_Tick(object sender, EventArgs e)
         {
             UpdateShrink();
@@ -346,10 +325,9 @@ namespace shooter
             gamePanelWidth = gamePanelWidth > MinGamePanelWidth ? gamePanelWidth : MinGamePanelWidth;
             gamePanelHeight = gamePanelHeight > MinGamePanelHeight ? gamePanelHeight : MinGamePanelHeight;
 
-            gamePanel.Size = new Size(gamePanelWidth-1, gamePanelHeight-1);
-            this.Size = new Size(gamePanel.Size.Width+10,gamePanel.Size.Height+50);
+            gamePanel.Size = new Size(gamePanelWidth - 1, gamePanelHeight - 1);
+            this.Size = new Size(gamePanel.Size.Width + 10, gamePanel.Size.Height + 50);
         }
-
         public void StartBlinking(PictureBox pictureBox, int blinkDuration)
         {
             blinkTimer = new System.Windows.Forms.Timer();
@@ -365,9 +343,6 @@ namespace shooter
             // Start the Timer
             blinkTimer.Start();
         }
-
-
-
         private void BlinkTimer_Tick(PictureBox pictureBox, int blinkDuration)
         {
             // Toggle the visibility of the PictureBox
@@ -386,12 +361,5 @@ namespace shooter
             }
         }
 
-        private void btnplay_Click(object sender, EventArgs e)
-        {
-            MainTimer.Start();
-            SpawnTimer.Start();
-
-
-        }
     }
 }

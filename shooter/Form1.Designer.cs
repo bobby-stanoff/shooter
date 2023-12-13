@@ -55,7 +55,6 @@
             character.SizeMode = PictureBoxSizeMode.StretchImage;
             character.TabIndex = 0;
             character.TabStop = false;
-            character.Click += character_Click;
             // 
             // SpawnTimer
             // 
